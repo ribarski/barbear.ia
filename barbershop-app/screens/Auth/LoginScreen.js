@@ -2,10 +2,11 @@
 import React, { useState, useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, Text, HelperText } from 'react-native-paper';
-import { AuthContext } from '../../contexts/AuthContext';
-// import api from '../../api'; // Sua configuração do Axios
+import { AuthContext } from '../../navigation/AppNavigator/AuthProvider';
+import { useRouter } from 'expo-router';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,10 +22,8 @@ export default function LoginScreen({ navigation }) {
     setLoading(true);
     setError('');
     try {
-      // Exemplo de chamada à API (você implementará a lógica no AuthContext ou diretamente)
-      // const response = await api.post('/auth/login', { email, password });
-      // await signIn(response.data.token, response.data.user.role);
-      await signIn(email, password); // Simplificado para o exemplo
+      await signIn(email, password);
+      router.push('/auth/login-success');
     } catch (e) {
       setError('Falha no login. Verifique suas credenciais.');
       setLoading(false);
@@ -60,10 +59,7 @@ export default function LoginScreen({ navigation }) {
       >
         Entrar
       </Button>
-      <Button
-        onPress={() => navigation.navigate('Signup')}
-        style={styles.button}
-      >
+      <Button onPress={() => router.push('/auth/register')}>
         Não tem uma conta? Cadastre-se
       </Button>
       {/* Botão de Login com Google aqui */}

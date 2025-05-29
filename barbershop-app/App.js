@@ -1,8 +1,8 @@
 import React from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { AuthProvider } from './src/contexts/AuthContext'; 
-import AppNavigator from './src/navigation/AppNavigator';
-import { theme } from './src/theme'; 
+import { AuthProvider } from './navigation/AppNavigator/AuthProvider'; 
+import { AppNavigator } from './navigation/AppNavigator/AppNavigator';
+import { theme } from './theme/theme'; 
 
 export default function App() {
   return (
