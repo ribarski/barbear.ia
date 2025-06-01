@@ -59,7 +59,9 @@ export default function LoginScreen() {
       >
         Entrar
       </Button>
-      <Button onPress={() => router.push('/auth/register')}>
+      <Button 
+      labelStyle={{color: '#00B2FF'}}
+      onPress={() => router.push('/auth/register')}>
         Não tem uma conta? Cadastre-se
       </Button>
       {/* Botão de Login com Google aqui */}
@@ -72,15 +74,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: "#1E1E1E",
   },
   title: {
     textAlign: 'center',
     marginBottom: 20,
+    color: '#FFFFFF'
   },
   input: {
-    marginBottom: 10,
+    marginBottom: 10
   },
   button: {
     marginTop: 10,
-  },
+    color: '#FFFFFF',
+    backgroundColor: "#00B2FF",
+    borderRadius: 10
+  }
 });
