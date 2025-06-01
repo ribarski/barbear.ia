@@ -1,0 +1,37 @@
+# Node.js (backend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+*.env
+
+# Expo / React Native (frontend)
+.expo/
+.expo-shared/
+*.log
+*.tmp
+*.swp
+*.DS_Store
+
+# Cache Metro bundler
+.cache/
+babel-cache/
+haul-debug.log
+
+# Android / iOS (se gerar futuramente)
+android/
+ios/
+
+# VSCode
+.vscode/
+
+# IDEs
+.idea/
+
+# Build / dist
+dist/
+build/
+
+# TypeScript
+*.tsbuildinfo
