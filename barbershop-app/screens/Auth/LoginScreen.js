@@ -60,7 +60,7 @@ export default function LoginScreen() {
         Entrar
       </Button>
       <Button 
-      labelStyle={{color: '#00B2FF'}}
+      labelStyle={{color: '#13452C'}}
       onPress={() => router.push('/auth/register')}>
         Não tem uma conta? Cadastre-se
       </Button>
@@ -74,20 +74,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
-    backgroundColor: "#1E1E1E",
+    backgroundColor: "#FFEECC",
   },
   title: {
     textAlign: 'center',
     marginBottom: 20,
-    color: '#FFFFFF'
+    color: '#13452C'
   },
   input: {
-    marginBottom: 10
+    marginBottom: 10,
+    backgroundColor: '#FFFFFF',
   },
   button: {
     marginTop: 10,
     color: '#FFFFFF',
-    backgroundColor: "#00B2FF",
+    backgroundColor: "#13452C",
     borderRadius: 10
   }
 });

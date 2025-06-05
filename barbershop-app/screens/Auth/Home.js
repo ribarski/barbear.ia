@@ -71,18 +71,18 @@ export default function Home() {
 
       {/* Navegação inferior */}
       <View style={styles.bottomNav}>
-        <IconButton icon="home" />
-        <IconButton icon="calendar" />
-        <IconButton icon="account" />
+        <IconButton icon="home" iconColor='#FFFFFF' />
+        <IconButton icon="calendar" iconColor='#FFFFFF' />
+        <IconButton icon="account" iconColor='#FFFFFF' />
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#F5EFE6' }, // Bege claro
+  root: { flex: 1, backgroundColor: '#FFEECC' }, // Bege claro
   container: { padding: 16, paddingBottom: 100 },
-  locationText: { fontSize: 16, marginBottom: 12, color: '#355E3B' },
+  locationText: { fontSize: 16, marginBottom: 12, color: '#13452C' },
   searchbar: {
     marginBottom: 20,
     backgroundColor: '#FFFFFF',
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     fontSize: 13,
     textAlign: 'center',
-    color: '#355E3B', // Verde escuro
+    color: '#13452C', // Verde escuro
   },
   banner: {
     borderRadius: 12,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   bottomNav: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: '#355E3B',
+    backgroundColor: '#13452C',
     paddingVertical: 12,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,

@@ -59,7 +59,7 @@ export default function RegisterScreen() {
         Registrar
       </Button>
       <Button
-      labelStyle={{color: '#00B2FF'}}
+      labelStyle={{color: '#13452C'}}
       onPress={() => router.push('/auth/login')}>
       Já tem conta? Entrar
       </Button>
@@ -68,8 +68,23 @@ export default function RegisterScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#1E1E1E' },
-  title: { marginBottom: 24, textAlign: 'center', color: "#FFFFFF" },
-  input: { marginBottom: 16 },
-  button: { marginTop: 8 , backgroundColor: '#00B2FF' },
+  container: { 
+    flex: 1, 
+    justifyContent: 'center', 
+    padding: 20, 
+    backgroundColor: '#FFEECC' 
+  },
+  title: { 
+    marginBottom: 24, 
+    textAlign: 'center',
+    color: "#13452C" 
+  },
+  input: { 
+    marginBottom: 16,
+    backgroundColor: '#FFFFFF',
+  },
+  button: { 
+    marginTop: 8, 
+    backgroundColor: '#13452C' 
+  },
 });
