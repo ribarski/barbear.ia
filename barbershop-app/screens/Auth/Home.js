@@ -66,23 +66,45 @@ export default function Home() {
           <Card.Title title="Agende seu horário" subtitle="Sem filas, direto pelo app" />
         </Card>
 
+        {/* Espaço para rolagem */}
+        <View style={{ height: 20 }} />
+        <Text style={{ fontSize: 18, marginBottom: 16, color: '#13452C' }}>Serviços Populares</Text>
+        <View style={styles.grid}>
+          {categories.slice(0, 3).map((item, idx) => (
+            <View key={idx} style={styles.card}>
+              <IconButton icon={item.icon} size={28} />
+              <Text style={styles.cardText}>{item.title}</Text>
+            </View>
+          ))}
+        </View>
+
         <View style={{ height: 100 }} />
       </ScrollView>
 
       {/* Navegação inferior */}
       <View style={styles.bottomNav}>
-        <IconButton icon="home" iconColor='#FFFFFF' />
-        <IconButton icon="calendar" iconColor='#FFFFFF' />
-        <IconButton icon="account" iconColor='#FFFFFF' />
+        <IconButton icon="home" iconColor='#FFFFFF' size={32} />
+        <IconButton icon="calendar" iconColor='#FFFFFF' size={32} />
+        <IconButton icon="account" iconColor='#FFFFFF' size={32} />
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#FFEECC' }, // Bege claro
-  container: { padding: 16, paddingBottom: 100 },
-  locationText: { fontSize: 16, marginBottom: 12, color: '#13452C' },
+  root: { 
+    flex: 1, 
+    backgroundColor: '#FFEECC' 
+  }, // Bege claro
+  container: { 
+    padding: 16, 
+    paddingBottom: 100 
+  },
+  locationText: { 
+    fontSize: 16, 
+    marginBottom: 12, 
+    color: '#13452C' 
+  },
   searchbar: {
     marginBottom: 20,
     backgroundColor: '#FFFFFF',
@@ -117,9 +139,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     backgroundColor: '#13452C',
-    paddingVertical: 12,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
+    height: 120,
+    paddingVertical: 8,
     position: 'absolute',
     bottom: 0,
     left: 0,
