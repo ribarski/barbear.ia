@@ -58,14 +58,18 @@ export default function RegisterScreen() {
       <Button mode="contained" onPress={handleRegister} loading={loading} style={styles.button}>
         Registrar
       </Button>
-      <Button onPress={() => router.push('/auth/login')}>Já tem conta? Entrar</Button>
+      <Button
+      labelStyle={{color: '#00B2FF'}}
+      onPress={() => router.push('/auth/login')}>
+      Já tem conta? Entrar
+      </Button>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 20 },
-  title: { marginBottom: 24, textAlign: 'center' },
+  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#1E1E1E' },
+  title: { marginBottom: 24, textAlign: 'center', color: "#FFFFFF" },
   input: { marginBottom: 16 },
-  button: { marginTop: 8 },
+  button: { marginTop: 8 , backgroundColor: '#00B2FF' },
 });

@@ -1,5 +1,5 @@
-import LoginSuccessScreen from '../../screens/Auth/LoginSuccessScreen';
+import Home from '../../screens/Auth/Home';
 
 export default function LoginSuccess() {
-  return <LoginSuccessScreen />;
+  return <Home />;
 }
