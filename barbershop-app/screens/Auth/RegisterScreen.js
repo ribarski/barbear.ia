@@ -55,6 +55,13 @@ export default function RegisterScreen() {
         style={styles.input}
       />
       {error ? <HelperText type="error">{error}</HelperText> : null}
+      <Button
+        mode="text"
+        onPress={() => router.push('/auth/register-barber')}
+        style={styles.linkButton}
+      >
+        Sou um barbeiro
+      </Button>
       <Button mode="contained" onPress={handleRegister} loading={loading} style={styles.button}>
         Registrar
       </Button>
@@ -87,4 +94,7 @@ const styles = StyleSheet.create({
     marginTop: 8, 
     backgroundColor: '#13452C' 
   },
+  linkButton: {
+    marginBottom: 4,
+  }
 });

@@ -72,6 +72,16 @@ export const AuthProvider = ({ children }) => {
         }
         setIsLoading(false);
       },
+      signUpBarber: async (name, cpf, email, phone, password, barbershop) => {
+        setIsLoading(true);
+        try {
+          await api.post('/auth/register/barber', { name, cpf, email, phone, password, barbershop });
+        } catch (error) {
+          console.error('Erro no signUp:', error);
+          throw error;
+        }
+        setIsLoading(false);
+      },
       signOut: async () => {
         setIsLoading(true);
         try {

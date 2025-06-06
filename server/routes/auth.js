@@ -22,6 +22,33 @@ router.post('/register', async (req, res) => {
   }
 });
 
+// Registro Barbeiro
+router.post('/register-barber', async (req, res) => {
+  const { name, cpf, email, phone, password, barbershop } = req.body;
+  try {
+    if (!name || !cpf || !email || !phone || !password || !barbershop) {
+      return res.status(400).json({ message: 'Preencha todos os campos obrigatórios.' });
+    }
+
+    const emailExists = await Barber.findOne({ email });
+    if (emailExists) {
+      return res.status(400).json({ message: 'Este email já está em uso por outro barbeiro.' });
+    }
+
+    const cpfExists = await Barber.findOne({ cpf });
+    if (cpfExists) {
+      return res.status(400).json({ message: 'Este CPF já está cadastrado.' });
+    }
+
+    const barber = await Barber.create({ name, cpf, email, phone, password, barbershop });
+    return res.status(201).json({ message: 'Barbeiro registrado com sucesso!' });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Erro interno no servidor.' });
+  }
+});
+
 // Login
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
