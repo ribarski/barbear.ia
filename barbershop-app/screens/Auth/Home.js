@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView, Platform } from 'react-native';
 import { Text, Searchbar, Card, IconButton } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Location from 'expo-location';
+import { navigate } from 'expo-router/build/global-state/routing';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -84,6 +85,9 @@ export default function Home() {
       {/* Navegação inferior */}
       <View style={styles.bottomNav}>
         <IconButton icon="home" iconColor='#FFFFFF' size={32} />
+        <IconButton icon="camera" iconColor='#FFFFFF' size={32} 
+          onPress={() => navigate('https://facecut-suggestion.vercel.app/')}
+        />
         <IconButton icon="calendar" iconColor='#FFFFFF' size={32} />
         <IconButton icon="account" iconColor='#FFFFFF' size={32} />
       </View>
