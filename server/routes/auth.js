@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Barber = require('../models/Barber');
 
 const router = express.Router();
 
@@ -30,14 +31,9 @@ router.post('/register-barber', async (req, res) => {
       return res.status(400).json({ message: 'Preencha todos os campos obrigatórios.' });
     }
 
-    const emailExists = await Barber.findOne({ email });
-    if (emailExists) {
-      return res.status(400).json({ message: 'Este email já está em uso por outro barbeiro.' });
-    }
-
-    const cpfExists = await Barber.findOne({ cpf });
-    if (cpfExists) {
-      return res.status(400).json({ message: 'Este CPF já está cadastrado.' });
+    const barberExists = await Barber.findOne({ email });
+    if (barberExists) {
+      return res.status(400).json({ message: 'Email já cadastrado.' });
     }
 
     const barber = await Barber.create({ name, cpf, email, phone, password, barbershop });

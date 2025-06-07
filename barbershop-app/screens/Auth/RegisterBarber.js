@@ -20,12 +20,12 @@ export default function RegisterBarber() {
   const [error, setError] = useState('');
   const [barbershops, setBarbershops] = useState([]);
 
-//   useEffect(() => {
-//     const fetchedBarbershops = fetch('/api/barbershops').then(
-//         res => res.json()).then(data => setBarbershops(data)
-//     );
-//     setBarbershops(fetchedBarbershops);
-//   }, []);
+  // useEffect(() => {
+  //   const fetchedBarbershops = fetch('/model/barbershops').then(
+  //       res => res.json()).then(data => setBarbershops(data)
+  //   );
+  //   setBarbershops(fetchedBarbershops);
+  // }, []);
 
   const handleRegister = async () => {
     if (!name || !cpf || !email || !phone || !password || !barbershopId) {
