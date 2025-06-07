@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
-import api from './api'; // Importe sua configuração do Axios ou o cliente HTTP que você usará
+import api from './api';
 
-export const BarberContext = createContext();
+export const BarberContext = createContext(null);
 
 export const BarberProvider = ({ children }) => {
   const [barbershops, setBarbershops] = useState([]);

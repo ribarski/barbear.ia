@@ -3,11 +3,13 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { TextInput, Button, Text, HelperText } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 import { AuthContext } from '../../navigation/AppNavigator/AuthProvider';
+import { BarberContext } from '../../navigation/AppNavigator/BarberProvider';
 import { useRouter } from 'expo-router';
 
 export default function RegisterBarber() {
   const router = useRouter();
   const { signUpBarber } = useContext(AuthContext);
+  const { fetchBarbershops } = useContext(BarberContext);
 
   const [name, setName] = useState('');
   const [cpf, setCpf] = useState('');
@@ -20,12 +22,12 @@ export default function RegisterBarber() {
   const [error, setError] = useState('');
   const [barbershops, setBarbershops] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchedBarbershops = fetch('/model/barbershops').then(
-  //       res => res.json()).then(data => setBarbershops(data)
-  //   );
-  //   setBarbershops(fetchedBarbershops);
-  // }, []);
+  useEffect(() => {
+    const fetchedBarbershops = fetchBarbershops.then(
+        res => res.json()).then(data => setBarbershops(data)
+    );
+    setBarbershops(fetchedBarbershops);
+  }, []);
 
   const handleRegister = async () => {
     if (!name || !cpf || !email || !phone || !password || !barbershopId) {
@@ -53,7 +55,7 @@ export default function RegisterBarber() {
       <TextInput label="Telefone" value={phone} onChangeText={setPhone} style={styles.input} keyboardType="phone-pad" />
       <TextInput label="Senha" value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
 
-      {/* <View style={styles.pickerContainer}>
+      <View style={styles.pickerContainer}>
         <Picker
           selectedValue={barbershopId}
           onValueChange={(itemValue) => setBarbershopId(itemValue)}
@@ -63,7 +65,7 @@ export default function RegisterBarber() {
             <Picker.Item key={shop._id} label={shop.name} value={shop._id} />
           ))}
         </Picker>
-      </View> */}
+      </View>
 
       {error ? <HelperText type="error" style={{textAlign: 'center'}}>{error}</HelperText> : null}
       

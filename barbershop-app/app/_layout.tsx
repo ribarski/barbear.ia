@@ -27,11 +27,12 @@ export default function RootLayout() {
           <Stack.Screen name="auth" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
+        <Stack initialRouteName="barber">
+          <Stack.Screen name="barber" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>
-      <BarberProvider>
-        <Stack screenOptions={{ headerShown: false }} />
-      </BarberProvider>
     </AuthProvider>
   );
 }
