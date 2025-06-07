@@ -1,5 +1,5 @@
-import RegisterBarber from '../../screens/Auth/RegisterBarber';
+import RegisterBarberScreen from '../../screens/auth/RegisterBarberScreen';
 
-export default function RegisterBarberScreen() {
-  return <RegisterBarber />;
+export default function RegisterBarber() {
+  return <RegisterBarberScreen />;
 }
