@@ -36,7 +36,7 @@ router.post('/barbershops', async (req, res) => {
   }
 });
 
-router.get('/:barbershopId/barbers', async (req, res) => {
+router.get('/:barbershopId', async (req, res) => {
     try {
         const { barbershopId } = req.params;
         const barbers = await Barber.find({ barbershop: barbershopId });

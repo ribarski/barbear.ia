@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { Button, Card, Title, Paragraph } from 'react-native-paper';
 import { useRouter } from 'expo-router';
+import { BarberContext } from '../../navigation/AppNavigator/BarberProvider';
 
-// Função para formatar o objeto de endereço em uma string legível
 const formatAddress = (address) => {
   if (!address) return 'Endereço não disponível';
   return `${address.street}, ${address.number} - ${address.district}, ${address.city}`;
@@ -11,26 +11,9 @@ const formatAddress = (address) => {
 
 export default function BarbershopScreen() {
   const router = useRouter();
-  const [barbershops, setBarbershops] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { barbershops, loading, error, fetchBarbershops } = useContext(BarberContext);
 
   useEffect(() => {
-    const fetchBarbershops = async () => {
-      try {
-        const response = await fetch('http://SEU_IP_LOCAL:PORTA/api/barbershops');
-        const data = await response.json();
-        if (response.ok) {
-          setBarbershops(data);
-        } else {
-          throw new Error(data.message || 'Erro ao buscar barbearias');
-        }
-      } catch (e) {
-        setError(e.message);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchBarbershops();
   }, []);
 
@@ -46,12 +29,12 @@ export default function BarbershopScreen() {
     <Card style={styles.card}>
       <Card.Content style={styles.cardContent}>
         <View style={styles.infoContainer}>
-          <Title>{item.name}</Title>
-          <Paragraph>{formatAddress(item.address)}</Paragraph>
+          <Text variant="titleLarge">{item.name}</Text>
+          <Text variant="bodyMedium">{formatAddress(item.address)}</Text>
         </View>
         <Button 
           mode="contained" 
-          onPress={() => router.push(`/user/barbershop/${item._id}`)}
+          onPress={() => router.push(`model/${item._id}`)}
           style={styles.button}
         >
           Barbeiros

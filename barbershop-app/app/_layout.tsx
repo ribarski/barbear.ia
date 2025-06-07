@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { AuthProvider } from '../navigation/AppNavigator/AuthProvider';
+import { BarberProvider } from '../navigation/AppNavigator/BarberProvider';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -28,6 +29,9 @@ export default function RootLayout() {
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>
+      <BarberProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </BarberProvider>
     </AuthProvider>
   );
 }
