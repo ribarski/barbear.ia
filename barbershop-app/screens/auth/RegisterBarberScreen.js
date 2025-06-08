@@ -34,7 +34,7 @@ export default function RegisterBarberScreen() {
     setFormError('');
     try {
       await signUpBarber({ name, cpf, email, phone, password, barbershopId });
-      router.push('/login');
+      router.push('/auth/login');
     } catch (e) {
       setFormError('Erro ao registrar barbeiro. Verifique os dados.');
     } finally {

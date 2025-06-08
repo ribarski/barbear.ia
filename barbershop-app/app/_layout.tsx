@@ -5,13 +5,14 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
-// Importe seu AuthProvider e o hook useAuth
 import { AuthProvider, useAuth } from '../context/AuthProvider';
+import { BarberProvider, useBarber } from '../context/BarberProvider';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 // Componente que lida com a lógica de redirecionamento
 function RootLayoutNav() {
   const { user, role, loading } = useAuth();
+  const { barbershops, barbers, error } = useBarber();
   const segments = useSegments();
   const router = useRouter();
 
@@ -26,9 +27,9 @@ function RootLayoutNav() {
     // Se o usuário está logado, redirecione para a área correta
     if (user) {
       if (role === 'barber') {
-        router.replace('/barber/');
+        router.replace('/barber');
       } else {
-        router.replace('/user/');
+        router.replace('/user');
       }
     } 
     // Se o usuário não está logado e não está na área de auth, redirecione para o login
@@ -53,20 +54,22 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        {/* O RootLayoutNav cuida do redirecionamento */}
-        <RootLayoutNav />
-        
-        {/* O Stack agora conhece todos os grupos de rotas */}
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="auth" />
-          <Stack.Screen name="user" />
-          <Stack.Screen name="barber" />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        
-        <StatusBar style="auto" />
-      </ThemeProvider>
+      <BarberProvider> 
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          
+          <RootLayoutNav />
+          
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="auth" />
+            <Stack.Screen name="user" />
+            <Stack.Screen name="barber" />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          
+          <StatusBar style="auto" />
+
+        </ThemeProvider>
+      </BarberProvider>
     </AuthProvider>
   );
 }

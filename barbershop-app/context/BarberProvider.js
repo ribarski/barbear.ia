@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from 'react'; // Importar useContext
-import api from './AppNavigator/api';
+import api from '../api';
 
 export const BarberContext = createContext(null);
 

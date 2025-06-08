@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, Text, HelperText } from 'react-native-paper';
-import { AuthContext } from '../../context/AuthProvider';
+import { useAuth } from '../../context/AuthProvider';
 import { useRouter } from 'expo-router';
 
 export default function RegisterScreen() {
@@ -12,7 +12,7 @@ export default function RegisterScreen() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { signUp } = useContext(AuthContext);
+  const { signUp } = useAuth();
 
   const handleRegister = async () => {
     if (!email || !password || !name) {
@@ -23,7 +23,7 @@ export default function RegisterScreen() {
     setError('');
     try {
       await signUp(name, email, password);
-      router.push('/login');
+      router.push('/auth/login');
     } catch (e) {
       setError('Erro ao registrar. Tente novamente.');
     }
@@ -57,7 +57,7 @@ export default function RegisterScreen() {
       {error ? <HelperText type="error">{error}</HelperText> : null}
       <Button
         mode="text"
-        onPress={() => router.push('/register-barber')}
+        onPress={() => router.push('/auth/register-barber')}
         style={styles.linkButton}
       >
         Sou um barbeiro
@@ -67,7 +67,7 @@ export default function RegisterScreen() {
       </Button>
       <Button
       labelStyle={{color: '#13452C'}}
-      onPress={() => router.push('/login')}>
+      onPress={() => router.push('/auth/login')}>
       Já tem conta? Entrar
       </Button>
     </View>

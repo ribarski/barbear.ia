@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, Text, HelperText } from 'react-native-paper';
-import { AuthContext } from '../../context/AuthProvider';
+import { useAuth } from '../../context/AuthProvider';
 import { useRouter } from 'expo-router';
 
 export default function LoginScreen() {
@@ -11,7 +11,7 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { signIn } = useContext(AuthContext); // Função do seu AuthContext
+  const { signIn } = useAuth(); // Função do seu AuthContext
 
   const handleLogin = async () => {
     if (!email || !password) {
