@@ -2,14 +2,14 @@ import React, { useState, useContext, useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { TextInput, Button, Text, HelperText } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
-import { AuthContext } from '../../navigation/AppNavigator/AuthProvider';
-import { BarberContext } from '../../navigation/AppNavigator/BarberProvider';
+import { useAuth } from '../../context/AuthProvider';
+import { useBarber } from '../../context/BarberProvider';
 import { useRouter } from 'expo-router';
 
-export default function RegisterBarber() {
+export default function RegisterBarberScreen() {
   const router = useRouter();
-  const { signUpBarber } = useContext(AuthContext);
-  const { fetchBarbershops } = useContext(BarberContext);
+  const { signUpBarber } = useAuth();
+  const { barbershops, fetchBarbershops, loading: barberContextLoading, error: barberContextError } = useBarber();
 
   const [name, setName] = useState('');
   const [cpf, setCpf] = useState('');
@@ -18,15 +18,11 @@ export default function RegisterBarber() {
   const [password, setPassword] = useState('');
   const [barbershopId, setBarbershopId] = useState('');
   
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [barbershops, setBarbershops] = useState([]);
+  const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState('');
 
   useEffect(() => {
-    const fetchedBarbershops = fetchBarbershops.then(
-        res => res.json()).then(data => setBarbershops(data)
-    );
-    setBarbershops(fetchedBarbershops);
+    fetchBarbershops();
   }, []);
 
   const handleRegister = async () => {
@@ -34,15 +30,16 @@ export default function RegisterBarber() {
       setError('Preencha todos os campos.');
       return;
     }
-    setLoading(true);
-    setError('');
+    setFormLoading(true);
+    setFormError('');
     try {
       await signUpBarber({ name, cpf, email, phone, password, barbershopId });
-      router.push('/auth/login');
+      router.push('/login');
     } catch (e) {
-      setError('Erro ao registrar barbeiro. Verifique os dados e tente novamente.');
+      setFormError('Erro ao registrar barbeiro. Verifique os dados.');
+    } finally {
+      setFormLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -59,15 +56,17 @@ export default function RegisterBarber() {
         <Picker
           selectedValue={barbershopId}
           onValueChange={(itemValue) => setBarbershopId(itemValue)}
+          enabled={!barberContextLoading && barbershops.length > 0}
         >
-          <Picker.Item label="Selecione sua barbearia" value="" />
+          <Picker.Item label={barberContextLoading ? "Carregando barbearias..." : "Selecione sua barbearia"} value="" />
           {barbershops.map((shop) => (
             <Picker.Item key={shop._id} label={shop.name} value={shop._id} />
           ))}
         </Picker>
       </View>
 
-      {error ? <HelperText type="error" style={{textAlign: 'center'}}>{error}</HelperText> : null}
+      {formError ? <HelperText type="error">{formError}</HelperText> : null}
+      {barberContextError ? <HelperText type="error">{barberContextError}</HelperText> : null}
       
       <Button mode="contained" onPress={handleRegister} loading={loading} style={styles.button}>
         Registrar

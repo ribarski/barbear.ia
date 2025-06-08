@@ -1,8 +1,7 @@
-// src/screens/Auth/LoginScreen.js
 import React, { useState, useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, Text, HelperText } from 'react-native-paper';
-import { AuthContext } from '../../navigation/AppNavigator/AuthProvider';
+import { AuthContext } from '../../context/AuthProvider';
 import { useRouter } from 'expo-router';
 
 export default function LoginScreen() {
@@ -23,7 +22,6 @@ export default function LoginScreen() {
     setError('');
     try {
       await signIn(email, password);
-      router.push('/auth/login-success');
     } catch (e) {
       setError('Falha no login. Verifique suas credenciais.');
       setLoading(false);

@@ -1,11 +1,19 @@
-import React, { createContext, useState } from 'react';
-import api from './api';
+import React, { createContext, useState, useContext } from 'react'; // Importar useContext
+import api from './AppNavigator/api';
 
 export const BarberContext = createContext(null);
 
+export const useBarber = () => {
+  const context = useContext(BarberContext);
+  if (!context) {
+    throw new Error('useBarber must be used within a BarberProvider');
+  }
+  return context;
+};
+
 export const BarberProvider = ({ children }) => {
   const [barbershops, setBarbershops] = useState([]);
-  const [barbers, setBarbers] = useState([]); // Armazena a lista de barbeiros da loja selecionada
+  const [barbers, setBarbers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -14,7 +22,7 @@ export const BarberProvider = ({ children }) => {
     setError(null);
     try {
       const response = await api.get('/model/barbershops');
-      const data = await response.json();
+      const data = response.data;
       setBarbershops(data);
     } catch (e) {
       setError(e.message);
@@ -26,10 +34,9 @@ export const BarberProvider = ({ children }) => {
   const fetchBarbersByShop = async (barbershopId) => {
     setLoading(true);
     setError(null);
-    setBarbers([]); // Limpa a lista anterior antes de buscar uma nova
     try {
       const response = await api.get(`/model/${barbershopId}`);
-      const data = await response.json();
+      const data = response.data;
       setBarbers(data);
     } catch (e) {
       setError(e.message);
