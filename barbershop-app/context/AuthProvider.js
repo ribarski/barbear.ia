@@ -1,13 +1,23 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import api from '../api'; // Garanta que o caminho para seu wrapper de API esteja correto
+import api from '../api';
 
 const AuthContext = createContext(null);
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [barbershops, setBarbershops] = useState([]);
 
   useEffect(() => {
     const loadStorageData = async () => {
@@ -71,28 +81,36 @@ export function AuthProvider({ children }) {
     return api.post('/auth/register', { name, email, password });
   };
   
-  const signUpBarber = async (barberData) => {
-    return api.post('/auth/register-barber', { ...barberData });
+  const signUpBarber = async (name, cpf, email, phone, password, barbershopId) => {
+    return api.post('/auth/register-barber', { name, cpf, email, phone, password, barbershopId });
   };
 
+  const fetchBarbershops = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await api.get('/model/barbershops');
+      const data = response.data;
+      setBarbershops(data);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const value = {
     user,
     role,
     loading,
+    error,
+    barbershops,
     signIn,
     signOut,
     signUp,
-    signUpBarber
+    signUpBarber,
+    fetchBarbershops
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};

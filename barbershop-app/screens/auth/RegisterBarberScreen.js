@@ -3,13 +3,11 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { TextInput, Button, Text, HelperText } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 import { useAuth } from '../../context/AuthProvider';
-import { useBarber } from '../../context/BarberProvider';
 import { useRouter } from 'expo-router';
 
 export default function RegisterBarberScreen() {
   const router = useRouter();
-  const { signUpBarber } = useAuth();
-  const { barbershops, fetchBarbershops, loading: barberContextLoading, error: barberContextError } = useBarber();
+  const { user, role, loading, error, barbershops, signUpBarber, fetchBarbershops } = useAuth();
 
   const [name, setName] = useState('');
   const [cpf, setCpf] = useState('');
@@ -56,9 +54,9 @@ export default function RegisterBarberScreen() {
         <Picker
           selectedValue={barbershopId}
           onValueChange={(itemValue) => setBarbershopId(itemValue)}
-          enabled={!barberContextLoading && barbershops.length > 0}
+          enabled={!formLoading && barbershops.length > 0}
         >
-          <Picker.Item label={barberContextLoading ? "Carregando barbearias..." : "Selecione sua barbearia"} value="" />
+          <Picker.Item label={formLoading ? "Carregando barbearias..." : "Selecione sua barbearia"} value="" />
           {barbershops.map((shop) => (
             <Picker.Item key={shop._id} label={shop.name} value={shop._id} />
           ))}
@@ -66,7 +64,6 @@ export default function RegisterBarberScreen() {
       </View>
 
       {formError ? <HelperText type="error">{formError}</HelperText> : null}
-      {barberContextError ? <HelperText type="error">{barberContextError}</HelperText> : null}
       
       <Button mode="contained" onPress={handleRegister} loading={loading} style={styles.button}>
         Registrar

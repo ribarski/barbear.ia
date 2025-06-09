@@ -6,13 +6,11 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { AuthProvider, useAuth } from '../context/AuthProvider';
-import { BarberProvider, useBarber } from '../context/BarberProvider';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 // Componente que lida com a lógica de redirecionamento
 function RootLayoutNav() {
   const { user, role, loading } = useAuth();
-  const { barbershops, barbers, error } = useBarber();
   const segments = useSegments();
   const router = useRouter();
 
@@ -54,22 +52,20 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <BarberProvider> 
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          
-          <RootLayoutNav />
-          
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="auth" />
-            <Stack.Screen name="user" />
-            <Stack.Screen name="barber" />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          
-          <StatusBar style="auto" />
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        
+        <RootLayoutNav />
+        
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="auth" />
+          <Stack.Screen name="user" />
+          <Stack.Screen name="barber" />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        
+        <StatusBar style="auto" />
 
-        </ThemeProvider>
-      </BarberProvider>
+      </ThemeProvider>
     </AuthProvider>
   );
 }
