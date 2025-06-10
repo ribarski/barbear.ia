@@ -53,18 +53,14 @@ export default function RootLayout() {
   return (
     <AuthProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        
         <RootLayoutNav />
-        
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="auth" />
           <Stack.Screen name="user" />
           <Stack.Screen name="barber" />
           <Stack.Screen name="+not-found" />
         </Stack>
-        
         <StatusBar style="auto" />
-
       </ThemeProvider>
     </AuthProvider>
   );
