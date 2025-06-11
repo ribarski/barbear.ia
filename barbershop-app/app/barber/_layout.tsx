@@ -1,30 +1,31 @@
+import { Stack } from 'expo-router';
 import React from 'react';
-import { Tabs } from 'expo-router';
-import { FontAwesome } from '@expo/vector-icons'; // Exemplo de ícones
 
-export default function BarberTabLayout() {
+// Este é um layout de "Pilha" (Stack).
+// Ele simplesmente diz: "As telas dentro da pasta /user
+// serão navegadas como uma pilha".
+export default function BarberStackLayout() {
   return (
-    <Tabs screenOptions={{
-      headerShown: false, // Oculta o cabeçalho se você tiver um customizado
-      tabBarActiveTintColor: '#C77DFF', // Cor da aba ativa
-      tabBarInactiveTintColor: '#AAA',  // Cor da aba inativa
-    }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
-        }}
+    <Stack>
+      {/* A tela principal da área do usuário. Ocultamos o cabeçalho dela. */}
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      
+      {/* As outras telas da pilha. Elas terão um cabeçalho com título e botão de voltar. */}
+      <Stack.Screen 
+        name="barber" 
+        options={{ 
+          title: 'Barbeiros',
+          headerShown: true, // Garante que o cabeçalho com o botão "voltar" apareça
+        }} 
       />
-      {/* EXEMPLO DE NOVA ROTA 
-      <Tabs.Screen
-        name="schedules"
-        options={{
-          title: 'Meus Horários',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="calendar" color={color} />,
-        }}
+      <Stack.Screen 
+        name="barbershop" 
+        options={{ 
+          title: 'Barbearias',
+          headerShown: true,
+        }} 
       />
-      */}
-    </Tabs>
+      {/* Adicione outras telas do usuário aqui, se necessário */}
+    </Stack>
   );
 }

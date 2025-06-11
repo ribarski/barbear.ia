@@ -1,30 +1,31 @@
 import React from 'react';
-import { Tabs } from 'expo-router';
-import { FontAwesome } from '@expo/vector-icons'; // Exemplo de ícones
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { Stack, useRouter, useSegments } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { useFonts } from 'expo-font';
+import { UserProvider } from '@/context/UserProvider';
 
-export default function UserTabLayout() {
+export default function UserLayout() {
+  const colorScheme = useColorScheme();
+  const [loaded] = useFonts({
+    SpaceMono: require('../../assets/fonts/SpaceMono-Regular.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
-    <Tabs screenOptions={{
-      headerShown: false, // Oculta o cabeçalho se você tiver um customizado
-      tabBarActiveTintColor: '#C77DFF', // Cor da aba ativa
-      tabBarInactiveTintColor: '#AAA',  // Cor da aba inativa
-    }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
-        }}
-      />
-      {/* EXEMPLO DE NOVA ROTA 
-      <Tabs.Screen
-        name="schedules"
-        options={{
-          title: 'Meus Horários',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="calendar" color={color} />,
-        }}
-      />
-      */}
-    </Tabs>
+    <UserProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="barbershop" />
+          <Stack.Screen name="barber" />
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </UserProvider>
   );
 }
