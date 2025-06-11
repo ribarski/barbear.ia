@@ -1,15 +1,23 @@
 import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import { Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Button, Card } from 'react-native-paper';
 import { useLocalSearchParams } from 'expo-router';
-import { BarberContext } from '../../navigation/AppNavigator/BarberProvider';
+import { useUser } from '../../context/UserProvider';
 
 export default function BarberScreen() {
   const { id: barbershopId } = useLocalSearchParams();
-  // Pega os dados e funções do Context
-  const { barbers, loading, error, fetchBarbersByShop } = useContext(BarberContext);
+  const { 
+    user, 
+    role, 
+    loading, 
+    error, 
+    barbershops, 
+    barbers, 
+    fetchBarbershops,
+    fetchBarbersByShop,
+    fetchBarbers 
+  } = useUser();
 
-  // O useEffect agora chama a função do provider com o ID da barbearia
   useEffect(() => {
     if (barbershopId) {
       fetchBarbersByShop(barbershopId);

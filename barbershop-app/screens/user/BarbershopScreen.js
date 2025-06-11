@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import { Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Button, Card } from 'react-native-paper';
 import { useRouter } from 'expo-router';
-import { BarberContext } from '../../navigation/AppNavigator/BarberProvider';
+import { useUser } from '../../context/UserProvider';
 
 const formatAddress = (address) => {
   if (!address) return 'Endereço não disponível';
@@ -11,10 +11,22 @@ const formatAddress = (address) => {
 
 export default function BarbershopScreen() {
   const router = useRouter();
-  const { barbershops, loading, error, fetchBarbershops } = useContext(BarberContext);
+  const { 
+    user, 
+    role, 
+    loading, 
+    error, 
+    barbershops, 
+    barbers, 
+    fetchBarbershops,
+    fetchBarbersByShop,
+    fetchBarbers 
+  } = useUser();
 
   useEffect(() => {
     fetchBarbershops();
+    fetchBarbersByShop();
+    fetchBarbers();
   }, []);
 
   if (loading) {
@@ -34,7 +46,7 @@ export default function BarbershopScreen() {
         </View>
         <Button 
           mode="contained" 
-          onPress={() => router.push(`model/${item._id}`)}
+          onPress={() => router.push(`barbers/${item._id}`)}
           style={styles.button}
         >
           Barbeiros
