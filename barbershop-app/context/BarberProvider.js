@@ -2,22 +2,23 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../api';
 
-const AuthContext = createContext(null);
+const BarberContext = createContext(null);
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
+export const useBarber = () => {
+  const context = useContext(BarberContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('useBarber must be used within an BarberProvider');
   }
   return context;
 };
 
-export function AuthProvider({ children }) {
+export function BarberProvider({ children }) {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [barbershops, setBarbershops] = useState([]);
+  const [barbers, setBarbers] = useState([]);
 
   useEffect(() => {
     const loadStorageData = async () => {
@@ -52,39 +53,6 @@ export function AuthProvider({ children }) {
     loadStorageData();
   }, []);
 
-  const signIn = async (email, password) => {
-    // A função de login agora faz a chamada à API E gerencia o token
-    const response = await api.post('/auth/login', { email, password });
-    const { user, role, token } = response.data;
-
-    // Salva o token no AsyncStorage para persistir a sessão
-    await AsyncStorage.setItem('userToken', token);
-    
-    // Define o token no header do 'api' para as próximas requisições
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-    // Atualiza o estado do contexto
-    setUser(user);
-    setRole(role);
-  };
-
-  const signOut = async () => {
-    // Limpa tudo relacionado à sessão
-    await AsyncStorage.removeItem('userToken');
-    delete api.defaults.headers.common['Authorization'];
-    setUser(null);
-    setRole(null);
-  };
-
-  // Funções de registro que apenas chamam a API, mas não logam o usuário
-  const signUp = async (name, email, password) => {
-    return api.post('/auth/register', { name, email, password });
-  };
-  
-  const signUpBarber = async (name, cpf, email, phone, password, barbershopId) => {
-    return api.post('/auth/register-barber', { name, cpf, email, phone, password, barbershopId });
-  };
-
   const fetchBarbershops = async () => {
     setLoading(true);
     setError(null);
@@ -99,18 +67,46 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const fetchBarbersByShop = async (barbershopId) => {
+    setLoading(true);
+    setError(null);
+    setBarbers([]);
+    try {
+      const response = await api.get(`/barbers/${barbershopId}`);
+      const data = response.data;
+      setBarbers(data);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchBarbers = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await api.get('/barbers');
+      const data = response.data;
+      setBarbers(data);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const value = {
     user,
     role,
     loading,
     error,
     barbershops,
-    signIn,
-    signOut,
-    signUp,
-    signUpBarber,
-    fetchBarbershops
+    barbers,
+    fetchBarbershops,
+    fetchBarbersByShop,
+    fetchBarbers
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <BarberContext.Provider value={value}>{children}</BarberContext.Provider>;
 }

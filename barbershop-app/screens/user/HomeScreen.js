@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Platform } from 'react-native';
+import { View, StyleSheet, ScrollView, Platform, TouchableOpacity } from 'react-native';
 import { Text, Searchbar, Card, IconButton } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Location from 'expo-location';
 import { navigate } from 'expo-router/build/global-state/routing';
+import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [location, setLocation] = useState(null);
   const [address, setAddress] = useState('Localizando...');
 
   const categories = [
-    { title: 'Corte', icon: 'content-cut' },
-    { title: 'Barba', icon: 'mustache' },
-    { title: 'Sobrancelha', icon: 'eyedropper-variant' },
-    { title: 'Pacotes', icon: 'package-variant' },
-    { title: 'Promoções', icon: 'sale' },
-    { title: 'Agendamentos', icon: 'calendar' },
+    { title: 'Corte', icon: 'content-cut', path: '/' },
+    { title: 'Barbeiros', icon: 'mustache', path: '/user/barbershop' },
+    { title: 'Sobrancelha', icon: 'eyedropper-variant', path: '/' },
+    { title: 'Pacotes', icon: 'package-variant', path: '/' },
+    { title: 'Promoções', icon: 'sale', path: '/' },
+    { title: 'Agendamentos', icon: 'calendar', path: '/' },
   ];
 
   // Buscar localização
@@ -54,10 +56,14 @@ export default function HomeScreen() {
         {/* Categorias */}
         <View style={styles.grid}>
           {categories.map((item, idx) => (
-            <View key={idx} style={styles.card}>
+            <TouchableOpacity 
+              key={idx} 
+              style={styles.card}
+              onPress={() => router.push(item.path)}
+            >
               <IconButton icon={item.icon} size={28} />
               <Text style={styles.cardText}>{item.title}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
 

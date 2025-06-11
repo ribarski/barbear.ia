@@ -58,7 +58,7 @@ export default function BarbershopScreen() {
   return (
     <View style={styles.container}>
       <FlatList
-        data={barbershops || []}
+        data={barbershops}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
         contentContainerStyle={{ padding: 16 }}
