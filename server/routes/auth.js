@@ -7,41 +7,21 @@ const router = express.Router();
 
 // Registro
 router.post('/register', async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, phone, email, password, isBarber } = req.body;
   try {
-    if (!name || !email || !password) {
+    if (!name || !phone || !email || !password) {
       return res.status(400).json({ message: 'Preencha todos os campos.' });
     }
+
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({ message: 'Email já cadastrado.' });
     }
-    const user = await User.create({ name, email, password });
+
+    const user = await User.create({ name, phone, email, password, isBarber });
     return res.status(201).json({ message: 'Usuário registrado com sucesso!' });
   } catch (err) {
     return res.status(500).json({ message: 'Erro no servidor.' });
-  }
-});
-
-// Registro Barbeiro
-router.post('/register-barber', async (req, res) => {
-  const { name, cpf, email, phone, password, barbershop } = req.body;
-  try {
-    if (!name || !cpf || !email || !phone || !password || !barbershop) {
-      return res.status(400).json({ message: 'Preencha todos os campos obrigatórios.' });
-    }
-
-    const barberExists = await Barber.findOne({ email });
-    if (barberExists) {
-      return res.status(400).json({ message: 'Email já cadastrado.' });
-    }
-
-    const barber = await Barber.create({ name, cpf, email, phone, password, barbershop });
-    return res.status(201).json({ message: 'Barbeiro registrado com sucesso!' });
-
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: 'Erro interno no servidor.' });
   }
 });
 

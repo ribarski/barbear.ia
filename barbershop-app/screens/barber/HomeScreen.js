@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Location from 'expo-location';
 import { navigate } from 'expo-router/build/global-state/routing';
 
-export default function Home() {
+export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [location, setLocation] = useState(null);
   const [address, setAddress] = useState('Localizando...');
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   root: { 
     flex: 1, 
     backgroundColor: '#FFEECC' 
-  }, // Bege claro
+  },
   container: { 
     padding: 16, 
     paddingBottom: 100 
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     fontSize: 13,
     textAlign: 'center',
-    color: '#13452C', // Verde escuro
+    color: '#13452C',
   },
   banner: {
     borderRadius: 12,
